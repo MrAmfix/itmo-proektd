@@ -2,6 +2,8 @@ package com.mramfix.aifintes.di
 
 import com.mramfix.aifintes.BuildConfig
 import com.mramfix.aifintes.data.api.AuthApi
+import com.mramfix.aifintes.data.auth.AuthInterceptor
+import com.mramfix.aifintes.data.auth.TokenAuthenticator
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,11 +30,16 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient {
+    fun provideOkHttpClient(
+        authInterceptor: AuthInterceptor,
+        tokenAuthenticator: TokenAuthenticator
+    ): OkHttpClient {
         val builder = OkHttpClient.Builder()
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(30, TimeUnit.SECONDS)
+            .addInterceptor(authInterceptor)
+            .authenticator(tokenAuthenticator)
 
         if (BuildConfig.DEBUG) {
             val logging = HttpLoggingInterceptor().apply {
