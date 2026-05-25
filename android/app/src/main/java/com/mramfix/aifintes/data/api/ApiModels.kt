@@ -35,11 +35,25 @@ data class OnboardingRequest(
     val goal: String,
     val level: String,
     val injuries: List<String>,
-    val equipment: List<String>
+    val equipment: List<String>,
+    val medical_disclaimer_accepted: Boolean = true
 )
 
 @Serializable
 data class OnboardingResponse(
     val message: String,
     val onboarding_completed: Boolean = true
+)
+
+@Serializable
+data class ProfileResponse(
+    val weight: Float? = null,
+    val height: Float? = null,
+    val goal: String? = null,
+    val level: String? = null,
+    val injuries: List<String>? = null,
+    val equipment: List<String>? = null,
+    val onboarding_completed: Boolean = false,
+    val gender: String? = null,
+    val age: Int? = null
 )

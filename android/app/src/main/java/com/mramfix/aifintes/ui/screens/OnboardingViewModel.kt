@@ -190,6 +190,25 @@ class OnboardingViewModel @Inject constructor(
         }
     }
 
+    private fun goalToApiValue(goal: String) = when (goal) {
+        "Похудение" -> "weight_loss"
+        "Набор мышечной массы" -> "muscle_gain"
+        "Поддержание формы" -> "maintenance"
+        "Реабилитация" -> "rehabilitation"
+        "Сила и выносливость" -> "strength"
+        "Гибкость" -> "flexibility"
+        else -> goal
+    }
+
+    private fun levelToApiValue(level: String) = when (level) {
+        "Новичок" -> "beginner"
+        "Любитель" -> "amateur"
+        "Средний" -> "intermediate"
+        "Продвинутый" -> "advanced"
+        "Профессионал" -> "professional"
+        else -> level
+    }
+
     fun previousStep() {
         val state = _uiState.value
         val prevIndex = state.currentStep.index - 1
@@ -211,10 +230,11 @@ class OnboardingViewModel @Inject constructor(
                 val request = OnboardingRequest(
                     weight = state.weight.toFloat(),
                     height = state.height.toFloat(),
-                    goal = state.selectedGoal!!,
-                    level = state.selectedLevel!!,
+                    goal = goalToApiValue(state.selectedGoal!!),
+                    level = levelToApiValue(state.selectedLevel!!),
                     injuries = state.selectedInjuries.filter { it != "Нет травм" },
-                    equipment = state.selectedEquipment.filter { it != "Нет инвентаря" }
+                    equipment = state.selectedEquipment.filter { it != "Нет инвентаря" },
+                    medical_disclaimer_accepted = true
                 )
                 val response = profileApi.submitOnboarding(request)
                 if (response.isSuccessful) {

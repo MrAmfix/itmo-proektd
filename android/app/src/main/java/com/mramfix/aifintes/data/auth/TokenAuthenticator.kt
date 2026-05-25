@@ -2,6 +2,7 @@ package com.mramfix.aifintes.data.auth
 
 import com.mramfix.aifintes.data.api.AuthApi
 import com.mramfix.aifintes.data.api.TokenResponse
+import dagger.Lazy
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Request
@@ -13,7 +14,7 @@ import javax.inject.Singleton
 @Singleton
 class TokenAuthenticator @Inject constructor(
     private val tokenManager: TokenManager,
-    private val authApi: AuthApi
+    private val authApi: Lazy<AuthApi>
 ) : Authenticator {
 
     override fun authenticate(route: Route?, response: Response): Request? {
@@ -26,7 +27,7 @@ class TokenAuthenticator @Inject constructor(
 
         return runBlocking {
             try {
-                val refreshResponse = authApi.login(
+                val refreshResponse = authApi.get().login(
                     com.mramfix.aifintes.data.api.LoginRequest(
                         email = "",  // Бэкенд должен уметь обновлять по refresh_token
                         password = refreshToken
