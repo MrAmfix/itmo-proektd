@@ -2,6 +2,7 @@ package com.mramfix.aifintes.di
 
 import com.mramfix.aifintes.BuildConfig
 import com.mramfix.aifintes.data.api.AuthApi
+import com.mramfix.aifintes.data.api.ProfileApi
 import com.mramfix.aifintes.data.auth.AuthInterceptor
 import com.mramfix.aifintes.data.auth.TokenAuthenticator
 import dagger.Module
@@ -65,5 +66,11 @@ object NetworkModule {
     @Singleton
     fun provideAuthApi(retrofit: Retrofit): AuthApi {
         return retrofit.create(AuthApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideProfileApi(retrofit: Retrofit): ProfileApi {
+        return retrofit.create(ProfileApi::class.java)
     }
 }
