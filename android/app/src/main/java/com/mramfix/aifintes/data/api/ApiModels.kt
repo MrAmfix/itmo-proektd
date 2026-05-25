@@ -27,3 +27,19 @@ data class LoginRequest(
     val email: String,
     val password: String
 )
+
+@Serializable
+data class OnboardingRequest(
+    val weight: Float,
+    val height: Float,
+    val goal: String,
+    val level: String,
+    val injuries: List<String>,
+    val equipment: List<String>
+)
+
+@Serializable
+data class OnboardingResponse(
+    val message: String,
+    val onboarding_completed: Boolean = true
+)
