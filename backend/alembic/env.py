@@ -15,6 +15,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from app.core.config import settings
 from app.core.database import Base
 
+# Import models so Alembic detects them
+import app.models.user  # noqa: F401
+
 config = context.config
 config.set_main_option("sqlalchemy.url", settings.DATABASE_URL)
 
