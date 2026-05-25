@@ -36,7 +36,7 @@ async def update_profile(
         profile = UserProfile(user_id=current_user.id)
         db.add(profile)
 
-    update_data = update.model_dump(exclude_unset=True)
+    update_data = update.model_dump(exclude_unset=True, mode="json")
     for field, value in update_data.items():
         setattr(profile, field, value)
 
@@ -60,8 +60,8 @@ async def submit_onboarding(
 
     profile.weight = request.weight
     profile.height = request.height
-    profile.goal = request.goal
-    profile.level = request.level
+    profile.goal = request.goal.value
+    profile.level = request.level.value
     profile.gender = request.gender
     profile.age = request.age
     profile.injuries = request.injuries

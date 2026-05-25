@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta, timezone
 
-import jwt
+from jose import jwt
 
 from app.core.config import settings
 
