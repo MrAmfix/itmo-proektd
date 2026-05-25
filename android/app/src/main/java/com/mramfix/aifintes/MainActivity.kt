@@ -7,10 +7,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.rememberNavController
+import com.mramfix.aifintes.navigation.AppNavGraph
 import com.mramfix.aifintes.ui.theme.AIFintesTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,17 +21,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             AIFintesTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    MainScreen(modifier = Modifier.padding(innerPadding))
+                    val navController = rememberNavController()
+                    AppNavGraph(
+                        navController = navController
+                    )
                 }
             }
         }
     }
-}
-
-@Composable
-fun MainScreen(modifier: Modifier = Modifier, viewModel: MainViewModel = hiltViewModel()) {
-    Text(
-        text = "AIFintes — готов к работе!",
-        modifier = modifier
-    )
 }
